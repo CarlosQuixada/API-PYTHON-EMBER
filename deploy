@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+branch=$2
+
+ansible-playbook -i inventory/$1 playbooks/deploy.yml \
+  --extra-vars "env=$1 version=${branch//\//-}"

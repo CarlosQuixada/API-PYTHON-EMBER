@@ -1,0 +1,37 @@
+---
+- hosts: all
+  tasks:
+  - name: clone git repository
+    git:
+      repo: git@gitlab.com:trustvox/ai/NOME_PROJETO.git
+      dest: /home/trustv/NOME_PROJETO
+      version: "{{ version }}"
+      
+  - name: build docker image
+    shell: cd NOME_PROJETO && docker build -t trustvox/NOME_PROJETO:{{ version }} .
+
+  - name: register possibly running container with same name
+    shell: docker ps -a | grep NOME_PROJETO | wc -l
+    register: NOME_PROJETO_running_container
+
+  - name: stop possibly running container with same name
+    shell: docker rm -f NOME_PROJETO
+    when: NOME_PROJETO_running_container.stdout != "0"
+
+  - name: stop or create network
+    shell: docker network create trustv_NOME_PROJETO_net || true
+
+  - name: run container
+    shell: >
+      docker network disconnect -f trustv_NOME_PROJETO_net NOME_PROJETO &
+      docker run -d
+      -e "NOME_PROJETO_ENV={{env}}"
+      --name NOME_PROJETO
+      -p NUM_PORTA:5000
+      --network trustv_NOME_PROJETO_net
+      trustvox/NOME_PROJETO:{{ version }}
+
+  - name: remove cloned git repo
+    file:
+      path: /home/trustv/NOME_PROJETO
+      state: absent

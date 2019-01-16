@@ -1,0 +1,57 @@
+image: 'ubuntu:16.04'
+
+stages:
+  # - test
+  - deploy
+
+# cache:
+#   paths:
+#     - vendor/bundle
+
+# before_script:
+  # - apt-get install -y python python-pip
+
+deploy: &base-deploy
+  stage: deploy
+  image: williamyeh/ansible:centos7
+  cache: {}
+  before_script:
+    - eval $(ssh-agent -s)
+    - echo $SSH_PRIVATE_KEY | base64 --decode | ssh-add -
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - echo $SSH_CONFIG | base64 --decode > ~/.ssh/config
+    - echo "169.57.163.94 staging.trustvox.com.br" >> /etc/hosts
+    - echo "169.57.165.211 apps-2-fun2.trustvox.com.br" >> /etc/hosts
+  only:
+    - master
+  except:
+    variables:
+      - $CI_COMMIT_MESSAGE =~ /SKIP DEPLOY/
+  environment:
+    name: production
+    # url: https://api.trustvox.com.br/health/check
+
+  script:
+    - ./deploy production $CI_COMMIT_REF_NAME
+
+staging-deploy:
+  <<: *base-deploy
+  environment:
+    name: staging
+    # url: https://alpha-api.trustvox.com.br/health/check
+  script:
+    - ./deploy staging $CI_COMMIT_REF_NAME
+
+beta-deploy:
+  <<: *base-deploy
+  when: manual
+  only:
+    - /.*/
+  except:
+    - master
+  environment:
+    name: staging
+    # url: https://alpha-api.trustvox.com.br/health/check
+  script:
+    - ./deploy staging $CI_COMMIT_REF_NAME

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+  <head>
+    <meta charset="utf-8">
+
+    <title>Trustvox - I.A.</title>
+
+    <link rel="apple-touch-icon" sizes="57x57" href="{{ url_for('static', filename='img/favicon/apple-touch-icon-57x57.png') }}" />
+    <link rel="apple-touch-icon" sizes="114x114" href="{{ url_for('static', filename='img/favicon/apple-touch-icon-114x114.png') }}" />
+    <link rel="apple-touch-icon" sizes="72x72" href="{{ url_for('static', filename='img/favicon/apple-touch-icon-72x72.png') }}" />
+    <link rel="apple-touch-icon" sizes="144x144" href="{{ url_for('static', filename='img/favicon/apple-touch-icon-144x144.png') }}" />
+    <link rel="apple-touch-icon" sizes="60x60" href="{{ url_for('static', filename='img/favicon/apple-touch-icon-60x60.png') }}" />
+    <link rel="apple-touch-icon" sizes="120x120" href="{{ url_for('static', filename='img/favicon/apple-touch-icon-120x120.png') }}" />
+    <link rel="apple-touch-icon" sizes="76x76" href="{{ url_for('static', filename='img/favicon/apple-touch-icon-76x76.png') }}" />
+    <link rel="apple-touch-icon" sizes="152x152" href="{{ url_for('static', filename='img/favicon/apple-touch-icon-152x152.png') }}" />
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='img/favicon/favicon-196x196.png') }}" sizes="196x196" />
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='img/favicon/favicon-96x96.png') }}" sizes="96x96" />
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='img/favicon/favicon-32x32.png') }}" sizes="32x32" />
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='img/favicon/favicon-16x16.png') }}" sizes="16x16" />
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='img/favicon/favicon-128x128.png') }}" sizes="128x128" />
+
+    <meta name="application-name" content="Trustvox Certificado"/>
+    <meta name="msapplication-TileColor" content="#FFFFFF" />
+    <meta name="msapplication-TileImage" content="favicon/mstile-144x144.png" />
+    <meta name="msapplication-square70x70logo" content="favicon/mstile-70x70.png" />
+    <meta name="msapplication-square150x150logo" content="favicon/mstile-150x150.png" />
+    <meta name="msapplication-wide310x150logo" content="favicon/mstile-310x150.png" />
+    <meta name="msapplication-square310x310logo" content="favicon/mstile-310x310.png" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <!-- Kube CSS -->
+    <link rel="stylesheet"  href="https://cdnjs.cloudflare.com/ajax/libs/kube/6.5.2/css/kube.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" />
+
+    <link rel="stylesheet" media="all" data-turbolinks-track="reload" href="{{ url_for('static', filename='css/overrides.css') }}" />
+  </head>
+  <body>
+    <div class="row">
+      <div class="col col-12">
+        <h2 class="text-center" style="margin-top: 3%">Análise automática do review</h2>
+      </div>
+    </div>
+
+    <div class="row align-center" style="margin-top: 1%">
+      <div class="col col-7">
+        <div class="col col-12">
+          <div class="texto">Muitas vezes o consumidor escreve alguma coisa ofensiva ou de duplo sentido. Esta ferramente permite que o algoritmo encontre e bloqueie as frases onde isso acontece.</div>
+        </div>
+        <fieldset class="fieldset-main">
+          <legend>FAÇA O TESTE: ESCREVA UM REVIEW DE PRODUTO PRA TESTAR</legend>
+          <div class="form-item">
+            <label><span class="error" id="error"></span></label>
+            <textarea rows="3" id="comment-text" style="resize: none;" placeholder="Digite aqui o seu review"></textarea>
+          </div>
+
+          <button class="w100" onclick="checkReview()">Testar</button>
+
+          <div class="hide box" style="margin-top: 5%" id="result-box">
+            <h3 class="text-center" id="result" style="margin: 0"></h3>
+          </div>
+        </fieldset>
+      </div>
+    </div>
+
+    <div class="row align-center" style="margin-top: 1%">
+      <div class="col col-7">
+        <div class="texto">
+          Este serviço de análise é desenvolvido apenas como teste. Para a perfeita otimização dos resultados da análise recomendamos uma calibragem de acordo com a área de atuação do e-commerce.
+        </div>
+        <div class="texto" style="margin-top: 1%">
+          Por exemplo: em um e-commerce de vinhos, é necessária a calibragem com conteúdo e termos específicos desse nicho. Os resultados apresentados nesta análise são gerais, podendo ser ainda mais eficientes com uma calibragem inicial por segmento.
+        </div>
+      </div>
+    </div>
+    <script type=text/javascript>
+
+    </script>
+    <footer>
+      <div class="row">
+        <div class="col">
+          <h2>
+            <a href="http://site.trustvox.com.br">
+              <img style="width: 80px; margin-top: 12px" src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo" />
+            </a>
+          </h2>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Kube JS + jQuery are used for some functionality, but are not required for the basic setup -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/kube/6.5.2/js/kube.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+    <script type=text/javascript scr ="{{ url_for('static', filename='js/index.js') }}"></script>
+    <script src="{{ url_for('static', filename ='js/index.js') }}"></script>
+    <script type=text/javascript>
+      $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+    </script>
+  </body>
+</html>
